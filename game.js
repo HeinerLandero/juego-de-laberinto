@@ -35,18 +35,29 @@ let enemyPositions = [];
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
+
+function fixNumber(n) {
+  return Number(n.toFixed(2));
+}
+
 function setCanvasSize(){
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.8  ;
+    canvasSize = window.innerWidth * 0.7;
   } else {
-    canvasSize = window.innerHeight * 0.8;
+    canvasSize = window.innerHeight * 0.7;
   }
+
+  canvasSize = Number(canvasSize.toFixed(0));
   
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
   
   elementsSize = canvasSize / 10.09;
+  
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
   startGame();
+
   
 };
 function showLives(){
@@ -191,7 +202,7 @@ function moveByKeys(event){
 };
 
 function moveUp(){
-  if((playerPosition.y - elementsSize) < elementsSize){
+  if((playerPosition.y - elementsSize).toFixed(4) < elementsSize){
     console.log('OUT');
   } else {
   playerPosition.y -= elementsSize;
@@ -199,7 +210,7 @@ function moveUp(){
 }  
 };
 function moveDown(){
-  if ((playerPosition.y + elementsSize) > canvasSize) {
+  if ((playerPosition.y + elementsSize).toFixed(4) > canvasSize) {
     console.log('OUT');
   } else {
     playerPosition.y += elementsSize;
@@ -207,7 +218,7 @@ function moveDown(){
   }
     };
 function moveLeft(){
-  if((playerPosition.x - elementsSize) < elementsSize){
+  if((playerPosition.x - elementsSize).toFixed(4) < elementsSize){
     console.log('OUT');
   } else {
   playerPosition.x -= elementsSize;
@@ -215,7 +226,7 @@ function moveLeft(){
 }
 };
 function moveRight(){
-if ((playerPosition.x + elementsSize) > canvasSize) {
+if ((playerPosition.x + elementsSize).toFixed(4) > canvasSize) {
   console.log('OUT');
 } else {
   playerPosition.x += elementsSize;
