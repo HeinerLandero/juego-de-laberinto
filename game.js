@@ -7,6 +7,8 @@ const btnLeft = document.querySelector('#left');
 const parrafo = document.querySelector('#parrafo');
 const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
+const spanRecord = document.querySelector('#record');
+const pResult = document.querySelector('#result');
 
 
 let canvasSize;
@@ -69,6 +71,7 @@ function startGame(){
   if(!timeStart){
     timeStart =  Date.now();
     timeInterval = setInterval(showTime, 100);
+    showRecord();
   }
   
   const mapRows = map.trim().split('\n');
@@ -155,18 +158,23 @@ function gameWin(){
   if(recordTime){ 
     if(recordTime >= playerTime ){
       localStorage.setItem('record_time', playerTime);
-      console.log('Nuevo record');
+      pResult.innerHTML ='Nuevo record';
     } else{
-      console.log('Lo siento, no superaste el record');
+      pResult.innerHTML ='Lo siento, no superaste el record';
     }
   } else{
-    localStorage.setItem('record_time', playerTime)
+    localStorage.setItem('record_time', playerTime);
+    pResult.innerHTML = 'Primera vez? Vuelve a intentar y me cuentas'; 
   }
   console.log({recordTime, playerTime});
 }
 function showTime(){
   spanTime.innerHTML = Date.now() - timeStart;
 }
+function showRecord(){
+  spanRecord.innerHTML = localStorage.getItem('record_time');
+}
+
 
 window.addEventListener('keydown', moveByKeys)
 btnUp.addEventListener('click',moveUp);
@@ -175,43 +183,43 @@ btnRight.addEventListener('click', moveRight);
   btnLeft.addEventListener('click', moveLeft);
 
 
-  function moveByKeys(event){
-    if( event.key == 'ArrowUp') moveUp();
-     else if(event.key =='ArrowDown')  moveDown();
-     else if(event.key =='ArrowLeft')  moveLeft();
-     else if(event.key =='ArrowRight') moveRight();
-  };
+function moveByKeys(event){
+  if( event.key == 'ArrowUp') moveUp();
+    else if(event.key =='ArrowDown')  moveDown();
+    else if(event.key =='ArrowLeft')  moveLeft();
+    else if(event.key =='ArrowRight') moveRight();
+};
 
-  function moveUp(){
-    if((playerPosition.y - elementsSize) < elementsSize){
-      console.log('OUT');
-    } else {
-    playerPosition.y -= elementsSize;
-    startGame();
-  }  
-  };
-  function moveDown(){
-    if ((playerPosition.y + elementsSize) > canvasSize) {
-      console.log('OUT');
-    } else {
-      playerPosition.y += elementsSize;
-    startGame();
-    }
-      };
-  function moveLeft(){
-    if((playerPosition.x - elementsSize) < elementsSize){
-      console.log('OUT');
-    } else {
-    playerPosition.x -= elementsSize;
-    startGame();
-  }
-  };
-  function moveRight(){
-  if ((playerPosition.x + elementsSize) > canvasSize) {
+function moveUp(){
+  if((playerPosition.y - elementsSize) < elementsSize){
     console.log('OUT');
   } else {
-    playerPosition.x += elementsSize;
-    startGame();
+  playerPosition.y -= elementsSize;
+  startGame();
+}  
+};
+function moveDown(){
+  if ((playerPosition.y + elementsSize) > canvasSize) {
+    console.log('OUT');
+  } else {
+    playerPosition.y += elementsSize;
+  startGame();
   }
-  };
+    };
+function moveLeft(){
+  if((playerPosition.x - elementsSize) < elementsSize){
+    console.log('OUT');
+  } else {
+  playerPosition.x -= elementsSize;
+  startGame();
+}
+};
+function moveRight(){
+if ((playerPosition.x + elementsSize) > canvasSize) {
+  console.log('OUT');
+} else {
+  playerPosition.x += elementsSize;
+  startGame();
+}
+};
 
