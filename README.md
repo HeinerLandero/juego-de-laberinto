@@ -1,1 +1,1 @@
--Desarrollo de juego usando JavaScript
+-Desarrollo de videojuego del laberintos usando HTML, CSS y JavaScript.
