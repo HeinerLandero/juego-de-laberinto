@@ -36,40 +36,38 @@ window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
 
-function fixNumber(n) {
-  return Number(n.toFixed(2));
-}
+// A los valores de canvasSize y elementSize se le quitan los decimales sobrantes.
+
 
 function setCanvasSize(){
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.7;
+    canvasSize = window.innerWidth * 0.85;
   } else {
-    canvasSize = window.innerHeight * 0.7;
+    canvasSize = window.innerHeight * 0.85;
   }
 
   canvasSize = Number(canvasSize.toFixed(0));
+  
   
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
   
   elementsSize = canvasSize / 10.09;
+
+  elementsSize = Number(elementsSize.toFixed(0));
   
   playerPosition.x = undefined;
   playerPosition.y = undefined;
   startGame();
-
   
 };
 function showLives(){
   const heartsArrays = Array(lives).fill(emojis['HEART']);
-  console.log(heartsArrays);
 
   spanLives.innerHTML = emojis["HEART"].repeat(lives)
 };
 
 function startGame(){
-  console.log({ canvasSize, elementsSize });
-  
   game.font = elementsSize + 'px Verdana';
   game.textAlign = 'end';
   const map = maps[level];
@@ -101,7 +99,6 @@ function startGame(){
         if(!playerPosition.x && !playerPosition.y){
           playerPosition.x = posX;
           playerPosition.y = posY;
-          console.log({playerPosition});
         }
       }else if (col == 'I'){
         giftPosition.x = posX;
@@ -121,7 +118,6 @@ function startGame(){
 };
  
 function levelFail(){
-  console.log('chocaste contra un enemigo');
   lives--;
   if(lives <= -1){   
     level = 0;
@@ -134,8 +130,8 @@ function levelFail(){
 }
 function movePlayer(){
   
-  const giftCollitionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
-  const giftCollitionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+  const giftCollitionX = playerPosition.x.toFixed(0) == giftPosition.x.toFixed(0);
+  const giftCollitionY = playerPosition.y.toFixed(0) == giftPosition.y.toFixed(0);
   const giftCollision = giftCollitionX && giftCollitionY;
   
   
@@ -143,8 +139,8 @@ function movePlayer(){
     levelWin();
   };
   const enemyCollision = enemyPositions.find(enemy =>{
-    const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
-    const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+    const enemyCollisionX = enemy.x.toFixed(0) == playerPosition.x.toFixed(0);
+    const enemyCollisionY = enemy.y.toFixed(0) == playerPosition.y.toFixed(0);
     return enemyCollisionX && enemyCollisionY;
   });
 
@@ -156,12 +152,10 @@ function movePlayer(){
 };
 
 function levelWin(){
-  console.log('subiste de nivel');
   level++;
   startGame();
 };
 function gameWin(){
-  console.log('Ganaste capo');
   clearInterval(timeInterval);
   const recordTime = localStorage.getItem('record_time');
   const playerTime = Date.now() - timeStart;
@@ -202,7 +196,7 @@ function moveByKeys(event){
 };
 
 function moveUp(){
-  if((playerPosition.y - elementsSize).toFixed(4) < elementsSize){
+  if((playerPosition.y - elementsSize ).toFixed(0) < elementsSize){
     console.log('OUT');
   } else {
   playerPosition.y -= elementsSize;
@@ -210,7 +204,7 @@ function moveUp(){
 }  
 };
 function moveDown(){
-  if ((playerPosition.y + elementsSize).toFixed(4) > canvasSize) {
+  if ((playerPosition.y + elementsSize).toFixed(0) > canvasSize) {
     console.log('OUT');
   } else {
     playerPosition.y += elementsSize;
@@ -218,7 +212,7 @@ function moveDown(){
   }
     };
 function moveLeft(){
-  if((playerPosition.x - elementsSize).toFixed(4) < elementsSize){
+  if((playerPosition.x - elementsSize).toFixed(0) < elementsSize){
     console.log('OUT');
   } else {
   playerPosition.x -= elementsSize;
@@ -226,7 +220,7 @@ function moveLeft(){
 }
 };
 function moveRight(){
-if ((playerPosition.x + elementsSize).toFixed(4) > canvasSize) {
+if ((playerPosition.x + elementsSize).toFixed(0) > canvasSize) {
   console.log('OUT');
 } else {
   playerPosition.x += elementsSize;
